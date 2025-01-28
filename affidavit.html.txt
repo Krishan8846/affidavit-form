@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affidavit Form</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    .form-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2 style="text-align: center;">AFFIDAVIT</h2>
+
+    <form id="affidavitForm">
+      <label for="declarantName">Declarant Name:</label>
+      <input type="text" id="declarantName" placeholder="Enter your full name" required>
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" placeholder="Enter your address" required>
+
+      <label for="passportNo">Passport No:</label>
+      <input type="text" id="passportNo" placeholder="Enter passport number" required>
+
+      <label for="passportIssueDate">Passport Issued Date:</label>
+      <input type="date" id="passportIssueDate" required>
+
+      <label for="passportName">Name in Passport:</label>
+      <input type="text" id="passportName" placeholder="Enter name as in passport" required>
+
+      <label for="licenseNo">Driving License No:</label>
+      <input type="text" id="licenseNo" placeholder="Enter driving license number" required>
+
+      <label for="licenseIssueDate">Driving License Issued Date:</label>
+      <input type="date" id="licenseIssueDate" required>
+
+      <label for="licenseName">Name in Driving License:</label>
+      <input type="text" id="licenseName" placeholder="Enter name as in driving license" required>
+
+      <button type="button" onclick="generateAffidavitPDF()">Download Affidavit as PDF</button>
+    </form>
+  </div>
+
+  <script>
+    async function generateAffidavitPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Retrieve form data
+      const declarantName = document.getElementById("declarantName").value;
+      const address = document.getElementById("address").value;
+      const passportNo = document.getElementById("passportNo").value;
+      const passportIssueDate = document.getElementById("passportIssueDate").value;
+      const passportName = document.getElementById("passportName").value;
+      const licenseNo = document.getElementById("licenseNo").value;
+      const licenseIssueDate = document.getElementById("licenseIssueDate").value;
+      const licenseName = document.getElementById("licenseName").value;
+
+      // Add content to the PDF
+      doc.text("AFFIDAVIT", 105, 20, { align: "center" });
+      doc.text(`I, ${declarantName} of ${address}, being a Sri Lankan citizen do hereby solemnly,`, 20, 40);
+      doc.text("sincerely, and truly declare and affirm as follows:", 20, 50);
+      doc.text(`1. I am a Sri Lankan Citizen who possesses Sri Lankan passport bearing No. ${passportNo}`, 20, 70);
+      doc.text(`   issued on ${passportIssueDate} as "${passportName}".`, 20, 80);
+      doc.text(`2. I am the holder of the Sri Lankan Driving License bearing No. ${licenseNo}`, 20, 100);
+      doc.text(`   issued on ${licenseIssueDate} as "${licenseName}".`, 20, 110);
+      doc.text("3. I hereby affirm that the name appears in the Passport and the name appears", 20, 130);
+      doc.text("   in the Driving License refer to me, one and the same person.", 20, 140);
+
+      doc.text("Signature of Declarant: ________________________", 20, 170);
+      doc.text("Date: ________________________", 20, 180);
+      doc.text("The foregoing affidavit having been read by the affirmant who understood the", 20, 200);
+      doc.text("contents and the effect thereof, was affirmed at the Sri Lanka Embassy in Tokyo", 20, 210);
+      doc.text("on this ___________ and signed before me.", 20, 220);
+
+      // Save the PDF
+      doc.save("Affidavit.pdf");
+    }
+  </script>
+</body>
+</html>
